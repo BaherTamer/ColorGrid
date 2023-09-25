@@ -1,5 +1,7 @@
+![Cover](https://github.com/BaherTamer/ColorGrid/assets/99125691/12f309ef-e2a9-44a1-9905-96b22bb86f8f)
+
 # ColorGrid
-Enhance your SwiftUI app by incorporating a fully customizable color picker inspired by the renowned Apple Reminders app.
+Enhance your SwiftUI app by incorporating a fully customizable color picker inspired by Apple Reminders app.
 
 <br/>
 
@@ -15,7 +17,7 @@ Enhance your SwiftUI app by incorporating a fully customizable color picker insp
 3. Click **Add Package** (Set the Dependency Rule to Up to Next Major Version)
 4. After adding the package, you will be able to import **ColorGrid** in your project by using.
 
-``` Swift
+``` swift
 import ColorGrid
 ```
 
@@ -24,7 +26,7 @@ import ColorGrid
 #### 📦 For Swift Packages
 Add a dependency in your `Package.swift`
 
-``` Swift
+``` swift
 dependencies: [
   .package(url: "https://github.com/BaherTamer/ColorGrid.git", from: "1.0.0")
 ]
@@ -35,7 +37,7 @@ dependencies: [
 ## ⚙️ Configuration
 ColorGrid lets you define some configurations to fit your needs.
 
-``` Swift
+``` swift
 public struct CGPicker: View {
 
     @Binding public var selection: Color
@@ -54,6 +56,75 @@ public struct CGPicker: View {
 
 }
 ```
+
+<br/>
+
+## 🎨 Example
+``` swift
+import ColorGrid
+import SwiftUI
+
+// Content Example
+struct ContentView: View {
+    
+    private let colors: [Color] = [.red, .orange, .yellow, .pink, .green, .blue, .purple, .gray] 
+    @State private var selectedColor: Color = .red
+    
+    var body: some View {
+        VStack(spacing: 32) {
+            CGPicker(colors: colors, selection: $selectedColor, columns: 6, icon: .circle)
+                .padding()
+                .frame(maxWidth: .infinity)
+                .background(Color(UIColor.systemGray6))
+                .cornerRadius(12)
+            
+            Text("ColorGrid")
+                .font(.title)
+                .fontWeight(.heavy)
+                .foregroundColor(selectedColor)
+        }
+        .padding()
+    }
+
+}
+```
+
+<br/>
+
+``` swift
+import ColorGrid
+import SwiftUI
+
+// Form Example
+struct ContentView: View {
+    
+    private let colors: [Color] = [.red, .orange, .yellow, .pink, .green, .blue, .purple, .gray]
+    @State private var selectedColor: Color = .red
+    
+    var body: some View {
+        Form {
+            Section {
+                Text("ColorGrid")
+                    .font(.title3)
+                    .fontWeight(.heavy)
+                    .foregroundColor(selectedColor)
+            }
+            
+            Section {
+                CGPicker(colors: colors, selection: $selectedColor)
+            }
+        }
+    }
+    
+}
+```
+
+<br/>
+
+| **Content Example Light** | **Content Example Dark** | **Form Example Light** | **Form Example Dark** |
+| ------------------------- | ------------------------ | ---------------------- | --------------------- |
+| ![Content Example Light](https://github.com/BaherTamer/ColorGrid/assets/99125691/1663c584-c75a-4bd2-8570-32a776036b8f) | ![Content Example Dark](https://github.com/BaherTamer/ColorGrid/assets/99125691/73484619-1f14-4cab-b80b-5aa96f9374b6) | ![Form Example Light](https://github.com/BaherTamer/ColorGrid/assets/99125691/2fa87532-8fe9-4a18-a9fb-a67e11d0ad1a) | ![Form Example Dark](https://github.com/BaherTamer/ColorGrid/assets/99125691/b0ca4a7f-7090-4110-a570-6899d8cb59ed) |
+
 
 <br/>
 
