@@ -13,16 +13,16 @@ import SwiftUI
  
  ``` swift
  struct ContentView: View {
-    @State private var selectedColor: Color = .red
-    private let colors: [Color] = [.red, .orange, .yellow, .green, .blue, .indigo, .purple, .pink, .brown]
+ @State private var selectedColor: Color = .red
+ private let colors: [Color] = [.red, .orange, .yellow, .green, .blue, .indigo, .purple, .pink, .brown]
  
-    var body: some View {
-        CGPicker(colors: colors, selection: $selectedColor, columns: 6, icon: .circle)
-    }
+ var body: some View {
+ CGPicker(colors: colors, selection: $selectedColor, columns: 6, icon: .circle, border: .normal)
+ }
  }
  ```
  
- By default the picker initialize `columns` with `6` and `icon` with `circle`.
+ By default the picker initialize `columns` with `6` and `icon` with `circle`, and `border` with `normal.
  
  ``` swift
  CGPicker(colors: colors, selection: $selectedColor)
@@ -36,6 +36,7 @@ public struct CGPicker: View {
     private let colors: [Color]
     private let columns: [GridItem]
     private let icon: CGIcon
+    private let border: CGBorder
     
     /// Creates an instance that selects a color.
     ///
@@ -44,12 +45,14 @@ public struct CGPicker: View {
     ///   - selection: A `Binding` to a variable that determines the currently-selected color
     ///   - columns: A number of columns for the picker grid view.
     ///   - icon: A symbol icon for each color shape in the picker.
-    public init(colors: [Color], selection: Binding<Color>, columns: Int = 6, icon: CGIcon = .circle) {
+    ///   - border: A color for the selected color border. 
+    public init(colors: [Color], selection: Binding<Color>, columns: Int = 6, icon: CGIcon = .circle, border: CGBorder = .normal) {
         self._selection = selection
         
         self.colors = colors
         self.columns = Array(repeating: GridItem(.flexible()), count: columns)
         self.icon = icon
+        self.border = border
     }
     
 }
@@ -62,7 +65,7 @@ extension CGPicker {
             ForEach(self.colors, id: \.self) { color in
                 ZStack {
                     if color == self.selection {
-                        highlightImage
+                        borderIcon
                     }
                     
                     Image(systemName: self.icon.fill)
@@ -79,11 +82,25 @@ extension CGPicker {
         }
     }
     
-    private var highlightImage: some View {
+}
+
+// MARK: - Border Component
+extension CGPicker {
+    
+    private var borderColor: Color {
+        switch border {
+        case .none: .clear
+        case .normal: Color(UIColor.systemGray3)
+        case .selection: selection
+        case .custom(color: let color): color
+        }
+    }
+    
+    private var borderIcon: some View {
         Image(systemName: self.icon.stroke)
             .resizable()
             .scaledToFit()
-            .foregroundColor(Color(UIColor.systemGray3))
+            .foregroundColor(borderColor)
     }
     
 }
