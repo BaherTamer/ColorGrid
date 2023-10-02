@@ -28,7 +28,7 @@ Add a dependency in your `Package.swift`
 
 ``` swift
 dependencies: [
-  .package(url: "https://github.com/BaherTamer/ColorGrid.git", from: "1.0.0")
+  .package(url: "https://github.com/BaherTamer/ColorGrid.git", from: "1.1.0")
 ]
 ```
 
@@ -45,13 +45,21 @@ public struct CGPicker: View {
     private let colors: [Color]
     private let columns: [GridItem]
     private let icon: CGIcon
+    private let border: CGBorder
     
-    public init(colors: [Color], selection: Binding<Color>, columns: Int = 6, icon: CGIcon = .circle) {
+    public init(
+        colors: [Color],
+        selection: Binding<Color>,
+        columns: Int = 6,
+        icon: CGIcon = .circle,
+        border: CGBorder = .normal
+    ) {
         self._selection = selection
         
         self.colors = colors
         self.columns = Array(repeating: GridItem(.flexible()), count: columns)
         self.icon = icon
+        self.border = border
     }
 
 }
@@ -64,7 +72,7 @@ public struct CGPicker: View {
 import ColorGrid
 import SwiftUI
 
-// Content Example
+// Basic Example
 struct ContentView: View {
     
     private let colors: [Color] = [.red, .orange, .yellow, .pink, .green, .blue, .purple, .gray] 
@@ -72,7 +80,7 @@ struct ContentView: View {
     
     var body: some View {
         VStack(spacing: 32) {
-            CGPicker(colors: colors, selection: $selectedColor, columns: 6, icon: .circle)
+            CGPicker(colors: colors, selection: $selectedColor)
                 .padding()
                 .frame(maxWidth: .infinity)
                 .background(Color(UIColor.systemGray6))
@@ -111,7 +119,13 @@ struct ContentView: View {
             }
             
             Section {
-                CGPicker(colors: colors, selection: $selectedColor)
+                CGPicker(
+                    colors: colors,
+                    selection: $selectedColor,
+                    columns: 5,
+                    icon: .hexagon,
+                    border: .custom(color: .primary)
+                )
             }
         }
     }
@@ -121,9 +135,10 @@ struct ContentView: View {
 
 <br/>
 
-| **Content Example Light** | **Content Example Dark** | **Form Example Light** | **Form Example Dark** |
+| **Basic Example Light** | **Basic Example Dark** | **Form Example Light** | **Form Example Dark** |
 | ------------------------- | ------------------------ | ---------------------- | --------------------- |
-| ![Content Example Light](https://github.com/BaherTamer/ColorGrid/assets/99125691/1663c584-c75a-4bd2-8570-32a776036b8f) | ![Content Example Dark](https://github.com/BaherTamer/ColorGrid/assets/99125691/73484619-1f14-4cab-b80b-5aa96f9374b6) | ![Form Example Light](https://github.com/BaherTamer/ColorGrid/assets/99125691/2fa87532-8fe9-4a18-a9fb-a67e11d0ad1a) | ![Form Example Dark](https://github.com/BaherTamer/ColorGrid/assets/99125691/b0ca4a7f-7090-4110-a570-6899d8cb59ed) |
+| ![Content Example Light](https://github.com/BaherTamer/ColorGrid/assets/99125691/1663c584-c75a-4bd2-8570-32a776036b8f) | ![Content Example Dark](https://github.com/BaherTamer/ColorGrid/assets/99125691/73484619-1f14-4cab-b80b-5aa96f9374b6) | ![Form Example Light](https://github.com/BaherTamer/ColorGrid/assets/99125691/ff2ebfaf-da56-4644-967d-8b619967987d) | ![Form Example Dark](https://github.com/BaherTamer/ColorGrid/assets/99125691/b0aeb6d3-aac4-4dc5-878d-555326477de1) |
+
 
 
 <br/>
