@@ -9,7 +9,7 @@ import SwiftUI
 
 /** A control used to select a color from the provided array of colors.
  
- You create a picker by providing an array of colors, a selection binding to a color, a number of columns of the colors grid, and a picker symbol.
+ You create a picker by providing an array of colors, a selection binding to a color, a number of columns of the colors grid, a picker symbol, and a border color style.
  
  ``` swift
  struct ContentView: View {
@@ -17,12 +17,12 @@ import SwiftUI
     private let colors: [Color] = [.red, .orange, .yellow, .green, .blue, .indigo, .purple, .pink, .brown]
  
     var body: some View {
-        CGPicker(colors: colors, selection: $selectedColor, columns: 6, icon: .circle)
+        CGPicker(colors: colors, selection: $selectedColor, columns: 6, icon: .circle, border: .normal)
     }
  }
  ```
  
- By default the picker initialize `columns` with `6` and `icon` with `circle`.
+ By default the picker initialize `columns` with `6` and `icon` with `circle`, and `border` with `normal`.
  
  ``` swift
  CGPicker(colors: colors, selection: $selectedColor)
@@ -45,6 +45,7 @@ public struct CGPicker: View {
     ///   - selection: A `Binding` to a variable that determines the currently-selected color
     ///   - columns: A number of columns for the picker grid view.
     ///   - icon: A symbol icon for each color shape in the picker.
+    ///   - border: A color for the selected color border.
     public init(colors: [Color], selection: Binding<Color>, columns: Int = 6, icon: CGIcon = .circle, border: CGBorder = .normal) {
         self._selection = selection
         
