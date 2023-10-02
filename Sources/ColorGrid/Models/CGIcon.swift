@@ -9,6 +9,12 @@ import Foundation
 
 public enum CGIcon: String {
     case circle
+    
+    case square
+    case diamond
+    case octagon
+    case hexagon
+    case seal
 }
 
 extension CGIcon {
